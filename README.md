@@ -1,110 +1,109 @@
-# 🚀 ResuMate
+# ResuListic 🚀
 
-AI-Powered Career Intelligence Platform
-
-## Overview
-
-ResuMate is an AI-powered Career Intelligence Platform designed to go beyond traditional Applicant Tracking Systems (ATS).
-
-Instead of relying solely on keyword matching, ResuMate combines:
-
-- OCR
-- NLP
-- Candidate Intelligence
-- Assessment Generation
-- Recommendation Systems
-- Predictive Analytics
-
-to transform resumes into actionable career insights.
+An AI-powered Career Intelligence and Recommendation Platform. ResuListic uses Machine Learning (NLP, OCR) and Generative AI to parse resumes, accurately extract candidate skills, and orchestrate dynamic, AI-evaluated technical assessments.
 
 ---
 
-## Current Development Status
+## 🌟 Key Features
 
-### Completed
-
-✅ OCR Pipeline
-
-✅ Resume Parsing
-
-✅ NLP Information Extraction
-
-✅ FastAPI ML Service Architecture
-
-### In Progress
-
-🚧 Candidate Profile Generation
-
-🚧 Assessment Generation Engine
-
-🚧 MongoDB Integration
-
-### Planned
-
-📌 Job Prediction
-
-📌 Salary Prediction
-
-📌 User Clustering
-
-📌 Personalized Learning Roadmaps
+* **Intelligent Resume Parsing:** Extracts text from PDFs, DOCX, and image files. Automatically falls back to **Tesseract OCR** for scanned documents.
+* **NLP Entity & Skill Extraction:** Utilizes a custom **SpaCy** pipeline to classify resume sections, extract contact information, and map raw text against a database of 170+ standardized tech skills.
+* **Confidence Scoring:** Intelligently categorizes skills into "High Confidence" (found in both Skills & Experience sections) and "Medium Confidence".
+* **Dynamic Skill Testing:** Generates a custom 10-question technical exam on the fly:
+  * **5 AI MCQs:** Generated dynamically using **Google Gemini 2.5 Flash**.
+  * **3 Moderate Coding Tasks:** Pulled randomly from the database.
+  * **2 Hard Coding Tasks:** Served via a mathematical **Circular Linked List** algorithm to guarantee consecutive, non-repeating questions on test retakes.
 
 ---
 
-## Architecture
+## 🛠️ Tech Stack
 
-![Architecture](image/architecture.png)
-
----
-
-## Technical Documentation
-
-Full project documentation:
-
-[ResuMate Overview](docs/ResuMate-System-Design.pdf)
+* **Backend Framework:** FastAPI (Python)
+* **Database:** MongoDB Atlas (NoSQL)
+* **AI & NLP:** Google GenAI (Gemini), SpaCy (`en_core_web_md`)
+* **OCR & Extraction:** Tesseract OCR, Poppler, `pdfplumber`, `pdf2image`, `pytesseract`
+* **Frontend:** React.js (Pending Implementation)
 
 ---
 
-## Team
+## ⚙️ Local Development Setup
 
-### Shivansh Bhadauriya
+### Prerequisites
+Before you begin, ensure you have the following installed on your machine:
+* Python 3.12+
+* [Tesseract OCR](https://github.com/UB-Mannheim/tesseract/wiki) (For Windows developers)
+* [Poppler](https://github.com/oschwartz10612/poppler-windows/releases) (For Windows developers)
+* A MongoDB Atlas cluster and a Google Gemini API Key.
 
-AI / ML Engineer
+### 1. Clone the repository
+```bash
+git clone https://github.com/yourusername/ResuListic.git
+cd ResuListic
+```
 
-- OCR Pipeline
-- Resume Parsing
-- NLP Extraction
-- Information Extraction
-- FastAPI ML Service
+### 2. Set up a Virtual Environment
+```bash
+# Create the virtual environment
+python -m venv venv
 
-### Tejas
+# Activate it (Windows)
+venv\Scripts\activate
 
-Full Stack Engineer
+# Activate it (macOS/Linux)
+source venv/bin/activate
+```
 
-- React Frontend
-- Node.js Backend
-- MongoDB
-- Authentication
-- API Gateway
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+
+# Download the required SpaCy NLP model
+python -m spacy download en_core_web_md
+```
+
+### 4. Environment Variables
+Create a `.env` file in the root directory and add the following:
+```env
+# MongoDB Connection
+MONGODB_URI="mongodb+srv://<username>:<password>@<cluster>.mongodb.net"
+
+# Google Gemini API
+GEMINI_API_KEY="your_api_key_here"
+
+# ONLY FOR WINDOWS LOCAL DEVELOPMENT (Leave blank for Cloud/Linux deployment)
+TESSERACT_CMD="C:\Program Files\Tesseract-OCR\tesseract.exe"
+POPPLER_PATH="C:\path\to\poppler\bin"
+```
+
+### 5. Run the Server
+Start the FastAPI server with hot-reloading:
+```bash
+uvicorn main:app --reload
+```
+The API will be available at `http://localhost:8000`. You can view the interactive Swagger API documentation at `http://localhost:8000/docs`.
 
 ---
 
-## Note
+## 📂 Project Structure
 
-This repository serves as a project showcase and technical documentation portal.
+```text
+ResuListic/
+├── main.py                     # FastAPI Application Entry Point
+├── requirements.txt            # Dependency Definitions
+├── docs/                       # Detailed System Documentation
+├── temp_uploads/               # Ephemeral storage for incoming files
+└── ml-services/
+    ├── builder/                # Assembles final JSON for MongoDB
+    ├── extraction/             # SpaCy NLP, Contact, and Section classifiers
+    ├── parser/                 # OCR, PDF, and DOCX routers
+    ├── schema/                 # Pydantic strict data models
+    └── skill_test/             # Test generation, Circular logic, AI orchestrators
+```
 
-The production source code remains private while the project is under active development.
+---
 
+## ☁️ Cloud Deployment
+ResuListic is designed to be cloud-native. When deploying to a Linux-based Docker environment (e.g., Google Cloud Run, AWS ECS), the application automatically detects the OS. `Poppler` and `Tesseract` will utilize the system's global `PATH`, ignoring the Windows-specific `.env` overrides.
 
-
-## Current Development Status
-
-![Development Status](image/Development_status.png)
-
-## Current Architecture
-
-![Architecture](image/current_architecture.png)
-
-## Resume Intelligence Pipeline
-
-![Pipeline](image/current_workflow.png)
+---
+*Built with ❤️ for AI-Powered Recruitment.*
