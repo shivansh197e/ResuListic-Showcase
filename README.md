@@ -105,5 +105,3 @@ ResuListic/
 ## ☁️ Cloud Deployment
 ResuListic is designed to be cloud-native. When deploying to a Linux-based Docker environment (e.g., Google Cloud Run, AWS ECS), the application automatically detects the OS. `Poppler` and `Tesseract` will utilize the system's global `PATH`, ignoring the Windows-specific `.env` overrides.
 
----
-*Built with ❤️ for AI-Powered Recruitment.*
